@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Test: Signup Page</title>
+    <!-- <link rel="stylesheet" href="signup.css"> -->
+    <style media="screen">
+    html{
+      box-sizing: border-box;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .container{
+      width: 50%;
+      height: 95vh;
+    }
+    .header{
+      width: 50vw;
+      height: 95vh;
+      margin: 0 auto;
+      margin-top: 100px;
+    }
+
+
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="signup-page">
+
+          <div class="signup-form">
+            <center><h2>Create Account</h2></center>
+
+
+            <div class="messages">
+              {% if messages %}
+              <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+
+            <form action="/signup/" method="post" onsubmit="return verifyPassword()">
+              {% csrf_token %}
+            <div class="row">
+              <div class="col">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" placeholder="Full Name " id="name" name="name" required>
+              </div>
+              <div class="col">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" placeholder="Email" id="email" name="email" required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label for="phone">Phone Number</label>
+                <input type="number" class="form-control" id="phone" placeholder="Phone Number " name="phone" required>
+              </div>
+              <div class="col">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+              <div class="col">
+                <label for="cpassword">Confirm Password</label>
+                <input type="password" class="form-control" id="cpassword" name="cpassword" required>
+              </div>
+            </div>
+
+            <br>
+            <br>
+            <div class="form-req">
+              <ul>
+              <li>Your password can't be too similar to your personal information</li>
+              <li>Your password must be over 8 characters long</li>
+              <li>Your password can't be commonly used password</li>
+              <li>Your password can;t be entirely numeric</li>
+              </ul>
+            </div>
+            <div class="btn">
+              <button class="btn btn-lg btn-secondary" type="submit" >Register</button>
+
+              <script type="text/javascript">
+                function verifyPassword(){
+                  let pass = document.getElementById('password').value
+                  let cpass = document.getElementById('cpassword').value
+
+                  if (pass.length <8) {
+                    alert("password must be over 8 characters")
+                    return false
+                  }
+                  if (cpass != pass) {
+                    alert("confirm password need to be same with password")
+                    return false
+                  }
+                  if (!isNaN(pass)) {
+                    alert("password must not be a number")
+                    return false
+                  }
+
+                  return true
+                }
+
+
+              </script>
+
+
+            </div>
+          </form>
+          <div>
+            <h3>Already have Account <a href="/login/"> Login</a></h3>
+          </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

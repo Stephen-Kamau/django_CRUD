@@ -1,0 +1,45 @@
+html{
+  box-sizing: border-box;
+  width: 100vw;
+  scroll-behavior: auto;
+
+}
+
+.header{
+  width: 50vw;
+  height: 95vh;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.top-c{
+  background-color: #178587;
+  height: 400px;
+}
+
+
+.l-header h2{
+  font-size: 18px;
+  background-color: #148587
+}
+
+
+.login-page{
+  margin-top: -400px;
+}
+
+.form-group{
+  padding-bottom: 50px;
+  height: 60px;
+}
+
+.btn1{
+  height: 100px;
+  padding-top: 100px;
+}
+.btn1 button{
+  width: 170px;
+}
+.new{
+  padding-top: 40px;
+}

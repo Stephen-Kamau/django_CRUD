@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Master Table</title>
+  <style media="screen">
+  .header{
+    width: 75vw;
+    /* height: 95vh; */
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+  .bg-dark{
+    height: 100px;
+    text-align: left;
+    margin-left: 10px;
+
+  }
+  .bg-dark h3{
+    padding:  40px;
+    padding-left: 15px;
+  }
+
+  .Actions{
+    height: 110px;
+  }
+  .Actions h2{
+    padding: 20px;
+  }
+  </style>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <!-- headsr -->
+
+      <div class="bg-dark">
+        <h3 class="text text-white ml-1.5">Title Mater</h3>
+      </div>
+
+
+      <div class="messages">
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="Actions col">
+        <h2>
+          <button type="button" id="dataAdder" class="btn btn-warning">Add</button>
+          <button type="button" class="btn btn-secondary" onClick="window.location.reload(true)">Refresh</button>
+          <button type="button" class="btn btn-danger" onClick="window.location.href='/'">Exit</button>
+        </h2>
+      </div>
+    </div>
+
+    <div class="content">
+      <table class="table">
+        <thead class="table-active">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Initial</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for df in data.object_list %}
+
+          <tr>
+            <td scope='row'>{{ df.id }}</td>
+            <td>{{ df.initial }}</td>
+            <td>{{ df.status }}</td>
+            <td>
+              <a href="/mater/edit/{{ df.id }}/" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" >Edit</span></a>
+              <a href="/mater/delete/{{ df.id }}/" class="btn btn-danger">Delete</a>
+            </td>
+          </tr>
+
+          {% endfor %}
+
+
+        </tbody>
+
+
+      </table>
+
+      <center>
+        {%if data.has_previous %}
+        <a href="?page={{data.previous_page_number}}" class="btn btn-secondary">Previous</a>
+        {% endif %}
+        <span style="padding:10px;">{{data.number}}</span>
+
+        {%if data.has_next %}
+        <a href="?page={{data.next_page_number}}" class="btn btn-secondary"> Next</a>
+        {% endif %}
+      </center>
+    </div>
+
+    <script type="text/javascript">
+    document.getElementById("dataAdder").addEventListener('click', function(e){
+      // alert("clicked")
+      document.getElementById("addData").style ='block';
+
+    })
+    </script>
+
+    <!-- this is a popup -->
+    <form action="/mater/" method="post" id="addData" style="display:none">
+      {% csrf_token %}
+      <div class="form-group col-md-4">
+        <label for="Initals">Your Initials</label>
+        <input type="text" name="inital" class="form-control" id="initial" placeholder="Initals" required>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="status">Status</label>
+        <select id="staus" name="status" class="form-control">
+          <option selected>Active</option>
+          <option>Inactive</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-dark">Save</button>
+
+
+    </form>
+
+  </div>
+</body>
+</html>

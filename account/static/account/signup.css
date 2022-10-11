@@ -1,0 +1,10 @@
+html{
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+}
+
+.container{
+  width: 60%;
+  height: 95vh;
+}
