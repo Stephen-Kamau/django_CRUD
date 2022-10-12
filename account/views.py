@@ -24,12 +24,12 @@ def insertEmployee():
 
     for i in range(data.shape[0]):
         row = data.loc[i]
-        name = row.name
+        name = dict(row)['name']
         address = row.address
         dept = row.Department
         salary = random.randint(1000, 43000)
         id = ''.join(secrets.choice(string.ascii_letters) for x in range(ID_NUM))
-
+        #
         if Department.objects.filter(department = dept).exists():
             dept_obj = Department.objects.filter(department=dept)[0]
         else:
@@ -292,7 +292,8 @@ def empUpdate(request, id):
             employee.save()
             messages.success(request, 'Updated Employee Details!')
             print("Updated Employee")
-            return render(request,'./account/emp_index.html',{ "data":data, "dept_obj":dept_obj})
+            return redirect("/emp/")
+            #return render(request,'./account/emp_index.html',{ "data":data, "dept_obj":dept_obj})
 
     return render(request,'./account/emp_edit.html', {'employee':employee, "dept_obj":dept_obj})
 

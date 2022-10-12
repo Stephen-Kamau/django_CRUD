@@ -20,7 +20,35 @@
     padding:  40px;
     padding-left: 15px;
   }
+  .row button{
+    padding: 15px;
+    margin-left: 15px;
+    height: 50px;
+  }
+  .row input{
+    /* padding: 17px; */
+    margin-left: 20px;
+    font-size: 15px;
+    margin-top: 10px;
+  }
 
+  #Employee_5000{
+    font-size: 18px;
+  }
+  #cheker{
+    /* width: 170px; */
+    margin-left: 50px;
+    font-weight: bold;
+    color: red;
+  }
+  #cheker label{
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  #checker input{
+    margin-left: 5px;
+    padding: 5px;
+  }
   .Actions{
     height: 110px;
   }
@@ -49,11 +77,19 @@
         {% endif %}
       </div>
       <div class="Actions col">
-        <h2>
+        <h2 class="row">
           <button type="button" id="dataAdder" class="btn btn-warning">Add</button>
           <button type="button" id="dataAdderD" class="btn btn-primary">Add Department</button>
           <button type="button" class="btn btn-secondary" onClick="window.location.reload(true)">Refresh</button>
           <button type="button" class="btn btn-danger" onClick="window.location.href='/'">Exit</button>
+          <span>
+
+          <input type="text" class="search text-sm form-control" name="seachBy" id="DeptSearcher" placeholder="Type Department you want to filter: " onkeyup = "myFunctionSearch()">
+          </span>
+          <span id="cheker" class="row">
+            <label for="Employee_5000" class="col-md-7">Check for Employee >20k and <50k </label>
+            <input type="checkbox" id="Employee_5000" class="form-control col-md-4" name="employeeChecker" value="" onclick="getValueGT20k_LT_50k()">
+          </span>
         </h2>
       </div>
     </div>
@@ -72,11 +108,11 @@
 
           {% for df in data.object_list %}
 
-          <tr>
+          <tr class="EmployeeData">
             <td scope='row'>{{ df.name }}</td>
             <td>{{ df.address }}</td>
-            <td>{{ df.salary }}</td>
-            <td>{{ df.emp_department }}</td>
+            <td class="EmpSalary">{{ df.salary }}</td>
+            <td class="EmployeeDept">{{ df.emp_department.department }}</td>
             <td>
               <a href="/emp/edit/{{ df.emp_id }}/" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" >Edit</span></a>
               <a href="/emp/delete/{{ df.emp_id }}/" class="btn btn-danger">Delete</a>
@@ -116,6 +152,60 @@
       document.getElementById("addDataD").style.display ='block';
 
     })
+
+
+
+    // serrch by department
+    function myFunctionSearch() {
+        // console.log("worked");
+      // Declare variables
+      var input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById('DeptSearcher');
+      filter = input.value.toUpperCase();
+      tr = document.getElementsByClassName("EmployeeData");
+      li = document.getElementsByClassName('EmployeeDept');
+      // console.log(tr);
+
+      // Loop through all list items, and hide those who don't match the search query
+      for (i = 0; i < li.length; i++) {
+        a = li[i];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+          // console.log("yeyeyeyeye");
+        } else {
+
+          tr[i].style.display = "none";
+        }
+      }
+      }
+
+
+      function getValueGT20k_LT_50k() {
+        // Declare variables
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('Employee_5000');
+        filter = input.value.toUpperCase();
+        tr = document.getElementsByClassName("EmployeeData");
+        li = document.getElementsByClassName('EmpSalary');
+
+        // #loop through anda remove any column not fitted with the condition
+        for (i = 0; i < li.length; i++) {
+          a = li[i];
+          sal_Value = a.textContent || a.innerText;
+          console.log(parseFloat(sal_Value))
+          if ((parseFloat(sal_Value) > 20000)  && (parseFloat(sal_Value)<=50000)) {
+              tr[i].style.display = "";
+
+          }
+          else{
+              tr[i].style.display = "none";
+
+          }
+        }
+        }
+
+
     </script>
 
 
@@ -162,6 +252,7 @@
 
 
     </form>
+
 
   </div>
 </body>
